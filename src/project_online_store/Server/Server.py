@@ -54,6 +54,29 @@ def handle_client(client_socket, client_address):
                 products,
             )
 
+        # GET /api/v1/products/1
+        elif method == "GET" and path.startswith("/api/v1/products/"):
+            product_id = int(path.split("/")[-1])
+
+            product = next(
+                (
+                    product
+                    for product in products
+                    if product["id"] == product_id
+                ),
+                None,
+            )
+
+            if product:
+                response = create_response(
+                    "200 OK",
+                    product,
+                )
+            else:
+                response = create_response(
+                    "404 Not Found",
+                    {"detail": "Product not found"},
+                )
 
     except Exception as e:
         print(e)
