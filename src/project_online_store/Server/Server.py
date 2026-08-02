@@ -78,6 +78,12 @@ def handle_client(client_socket, client_address):
                     {"detail": "Product not found"},
                 )
 
+        else:
+            response = create_response(
+                "404 Not Found",
+                {"detail": "Endpoint not found"},
+            )
+
     except Exception as e:
         print(e)
 
