@@ -27,19 +27,18 @@ categories = [category_1, category_2, category_3]
 
 
 def create_response(status_code, data):
-    response_body = json.dumps(data)
 
     response = (
         f"HTTP/1.1 {status_code}\r\n"
         "Content-Type: application/json\r\n"
-        f"Content-Length: {len(response_body.encode('utf-8'))}\r\n"
+        f"Content-Length: {len(data.encode('utf-8'))}\r\n"
         "\r\n"
-        f"{response_body}"
+        f"{data}"
     )
 
     return response.encode("utf-8")
 
-def handle_client(client_socket, client_address):
+def handle_client(client_socket):
     try:
         request = client_socket.recv(4096).decode()
 
@@ -83,13 +82,13 @@ def handle_client(client_socket, client_address):
             else:
                 response = create_response(
                     "404 Not Found",
-                    {"detail": "Product not found"},
+                    json.dumps({"detail": "Product not found"}),
                 )
 
         else:
             response = create_response(
                 "404 Not Found",
-                {"detail": "Endpoint not found"},
+                json.dumps({"detail": "Endpoint not found"}),
             )
 
         client_socket.sendall(response)
@@ -99,7 +98,7 @@ def handle_client(client_socket, client_address):
 
         response = create_response(
             "500 Internal Server Error",
-            {"detail": "Internal server error"},
+            json.dumps({"detail": "Internal server error"}),
         )
 
         client_socket.sendall(response)
