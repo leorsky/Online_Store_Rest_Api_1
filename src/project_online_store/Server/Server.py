@@ -27,6 +27,13 @@ def handle_client(client_socket, client_address):
         if request == '':
             client_socket.close()
 
+        request_line = request.split('\r\n')[0]
+
+        method, path, http_version = request_line.split()
+
+        print(f"Method: {method}")
+        print(f"Path: {path}")
+
 
     except Exception as e:
         print(e)
