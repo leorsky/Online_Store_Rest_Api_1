@@ -43,34 +43,11 @@ class Categories:
 
         return json.dumps(products)
 
-    def get_products_by_category(self, category_id: int, categories: list) -> str | None:
-        for category in categories:
-            if category.category_id == category_id:
-                products = []
+    def get_product_by_id(self, product_id: int) -> str:
+        products = []
 
-                for product in category.products:
-                    products.append({
-                        "id": product.idd,
-                        "name": product.name,
-                        "price": product.price,
-                    })
+        for product in self.products:
+            if product.idd == product_id:
+                products.append(json.loads(str(product)))
 
-                return json.dumps(products)
-
-        return None
-
-    def get_product_by_id(self, category_id: int, product_id: int, categories: list) -> str | None:
-        for category in categories:
-            if category.category_id == category_id:
-
-                for product in category.products:
-                    if product.idd == product_id:
-                        return json.dumps({
-                            "id": product.idd,
-                            "name": product.name,
-                            "price": product.price,
-                        })
-
-                return None
-
-        return None
+        return json.dumps(products)

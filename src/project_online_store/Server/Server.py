@@ -66,21 +66,19 @@ def handle_client(client_socket, client_address):
 
         # GET /api/v1/products/1
         elif method == "GET" and path.startswith("/api/v1/products/"):
-            product_id = int(path.split("/")[-1])
+            category_id = int(path.split("/")[-1])
 
-            product = next(
-                (
-                    product
-                    for product in products
-                    if product["id"] == product_id
-                ),
-                None,
-            )
+            for category in categories:
+                if category.category_id == category_id:
+                    data = category.get_products()
+                    break
+            else:
+                data = None
 
-            if product:
+            if data is not None:
                 response = create_response(
                     "200 OK",
-                    product,
+                    data,
                 )
             else:
                 response = create_response(
