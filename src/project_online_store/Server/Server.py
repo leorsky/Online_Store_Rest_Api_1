@@ -86,9 +86,18 @@ def handle_client(client_socket, client_address):
 
         client_socket.sendall(response)
 
-    except Exception as e:
-        print(e)
+    except Exception as error:
+        print(f"Error: {error}")
 
+        response = create_response(
+            "500 Internal Server Error",
+            {"detail": "Internal server error"},
+        )
+
+        client_socket.sendall(response)
+
+    finally:
+        client_socket.close()
 
 
 
