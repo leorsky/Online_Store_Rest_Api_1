@@ -49,17 +49,8 @@ class Products:
             raise ValueError("price must be a non-negative number")
         self._price = float(price)
 
-    def get_product_by_id(self, idd: int):
-        if not isinstance(idd, int):
-            raise TypeError("idd must be an integer")
-        if idd <= 0:
-            raise ValueError("idd must be a positive integer")
+    def __str__(self):
+        return f"idd: {self._idd}, name: {self._name}, price: {self._price}"
 
-        if self._idd == idd:
-            return {
-                "id": self._idd,
-                "name": self._name,
-                "price": self._price,
-            }
-        else:
-            return None
+    def __repr__(self):
+        return f"Products(idd={self._idd}, name='{self._name}', price={self._price})"
