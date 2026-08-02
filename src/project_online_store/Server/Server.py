@@ -1,5 +1,6 @@
 import socket
 import json
+import re
 
 from project_online_store.src.project_online_store.OOP.Categories import Categories
 from project_online_store.src.project_online_store.OOP.Products import Products
@@ -68,13 +69,38 @@ def handle_client(client_socket):
                 json.dumps(data)
             )
 
-        # GET /api/v1/products/{id}
-        elif method == "GET" and path.startswith("/api/v1/products/"):
+        # GET /api/v1/products/{id_category}
+        elif method == "GET" and re.fullmatch(r"/api/v1/products/\d+$", path):
             category_id = int(path.split("/")[-1])
 
             for category in categories:
                 if category.category_id == category_id:
                     data = category.get_products()
+                    break
+            else:
+                data = None
+
+            if data is not None:
+                response = create_response(
+                    "200 OK",
+                    data,
+                )
+            else:
+                response = create_response(
+                    "404 Not Found",
+                    json.dumps({
+                        "detail": "Product not found"
+                    }),
+                )
+
+        # GET /api/v1/products/{id_category}/{id_product}
+        elif method == "GET" and re.fullmatch(r"/api/v1/products/\d+/\d+", path):
+            category_id = int(path.split("/")[-2])
+            product_id = int(path.split("/")[-1])
+
+            for category in categories:
+                if category.category_id == category_id:
+                    data = category.get_product_by_id(product_id)
                     break
             else:
                 data = None
