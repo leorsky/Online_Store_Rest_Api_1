@@ -47,6 +47,13 @@ def handle_client(client_socket, client_address):
         print(f"Method: {method}")
         print(f"Path: {path}")
 
+        # GET /api/v1/products
+        if method == "GET" and path == "/api/v1/products":
+            response = create_response(
+                "200 OK",
+                products,
+            )
+
 
     except Exception as e:
         print(e)
