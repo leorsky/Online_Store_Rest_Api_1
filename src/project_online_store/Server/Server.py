@@ -20,6 +20,19 @@ products = [
     },
 ]
 
+def create_response(status_code, data):
+    response_body = json.dumps(data)
+
+    response = (
+        f"HTTP/1.1 {status_code}\r\n"
+        "Content-Type: application/json\r\n"
+        f"Content-Length: {len(response_body.encode('utf-8'))}\r\n"
+        "\r\n"
+        f"{response_body}"
+    )
+
+    return response.encode("utf-8")
+
 def handle_client(client_socket, client_address):
     try:
         request = client_socket.recv(4096).decode()
