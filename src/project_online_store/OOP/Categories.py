@@ -35,16 +35,11 @@ class Categories:
     def products(self) -> list:
         return self._products
 
-    def get_products(self, categories: list) -> str:
+    def get_products(self) -> str:
         products = []
 
-        for category in categories:
-            for product in category.products:
-                products.append({
-                    "id": product.idd,
-                    "name": product.name,
-                    "price": product.price,
-                })
+        for product in self.products:
+            products.append(json.loads(str(product)))
 
         return json.dumps(products)
 

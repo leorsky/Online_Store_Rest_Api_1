@@ -23,22 +23,8 @@ category_1 = Categories(1, [product_1_1, product_1_2, product_1_3])
 category_2 = Categories(2, [product_2_1, product_2_2])
 category_3 = Categories(3, [product_3_1, product_3_2, product_3_3])
 
-category = [category_1, category_2, category_3]
+categories = [category_1, category_2, category_3]
 
-products = [
-    {
-        "id": 1,
-        "name": "iPhone 15",
-        "category": "phone",
-        "price": 999,
-    },
-    {
-        "id": 2,
-        "name": "Samsung Galaxy S24",
-        "category": "phone",
-        "price": 899,
-    },
-]
 
 def create_response(status_code, data):
     response_body = json.dumps(data)
@@ -69,9 +55,13 @@ def handle_client(client_socket, client_address):
 
         # GET /api/v1/products
         if method == "GET" and path == "/api/v1/products":
+            data = []
+            for category in categories:
+                data.extend(json.loads(category.get_products()))
+
             response = create_response(
                 "200 OK",
-                products,
+                json.dumps(data)
             )
 
         # GET /api/v1/products/1

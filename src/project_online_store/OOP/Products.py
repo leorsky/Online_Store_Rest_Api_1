@@ -1,3 +1,6 @@
+import json
+
+
 class Products:
     def __init__(self, idd: int, name: str, price: float) -> None:
         if not isinstance(idd, int):
@@ -54,10 +57,12 @@ class Products:
         self._price = float(price)
 
     def __str__(self) -> str:
-        return (
-            f"ID: {self._idd}\r\n"
-            f"Name: {self._name}\r\n"
-            f"Price: {self._price}"
+        return json.dumps(
+            {
+                "id": self._idd,
+                "name": self._name,
+                "price": self._price,
+            }
         )
 
     def __repr__(self) -> str:
