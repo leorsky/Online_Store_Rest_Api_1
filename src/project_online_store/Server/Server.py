@@ -84,6 +84,8 @@ def handle_client(client_socket, client_address):
                 {"detail": "Endpoint not found"},
             )
 
+        client_socket.sendall(response)
+
     except Exception as e:
         print(e)
 
