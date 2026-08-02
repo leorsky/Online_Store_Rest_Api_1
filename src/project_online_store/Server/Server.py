@@ -5,6 +5,21 @@ import json
 HOST = 'localhost'
 PORT = 8000
 
+products = [
+    {
+        "id": 1,
+        "name": "iPhone 15",
+        "category": "phone",
+        "price": 999,
+    },
+    {
+        "id": 2,
+        "name": "Samsung Galaxy S24",
+        "category": "phone",
+        "price": 899,
+    },
+]
+
 def handle_client(client_socket, client_address):
     pass
 
