@@ -51,7 +51,7 @@ def handle_client(client_socket):
         request_line = request.split('\r\n')[0]
 
         method, path, http_version = request_line.split()
-        if method == "POST":
+        if method == "POST" or method == "PUT":
             body = request.split("\r\n\r\n", 1)[-1]
 
         print(f"Method: {method}")
@@ -165,6 +165,65 @@ def handle_client(client_socket):
                         "detail": "Invalid JSON in request body"
                     })
                 )
+
+
+        # PUT /api/v1/products/{id_category}/{id_product}
+        elif method == "PUT" and re.fullmatch(
+                r"/api/v1/products/\d+/\d+",
+                path
+        ):
+            category_id = int(path.split("/")[-2])
+            product_id = int(path.split("/")[-1])
+
+            try:
+                product_data = json.loads(body)
+
+                product_name = product_data["name"]
+                product_price = product_data["price"]
+
+                for category in categories:
+                    if category.category_id == category_id:
+
+                        for product in category.products:
+                            if product.idd == product_id:
+                                product.name = product_name
+                                product.price = product_price
+
+                                response = create_response(
+                                    "200 OK",
+                                    json.dumps({
+                                        "id": product_id,
+                                        "name": product_name,
+                                        "price": product_price
+                                    })
+                                )
+                                break
+                        else:
+                            response = create_response(
+                                "404 Not Found",
+                                json.dumps({
+                                    "detail": "Product not found"
+                                })
+                            )
+
+                        break
+
+                else:
+                    response = create_response(
+                        "404 Not Found",
+                        json.dumps({
+                            "detail": "Category not found"
+                        })
+                    )
+
+            except json.JSONDecodeError:
+                response = create_response(
+                    "400 Bad Request",
+                    json.dumps({
+                        "detail": "Invalid JSON in request body"
+                    })
+                )
+
 
         # DELETE /api/v1/products/{id_category}/{id_product}
         elif method == "DELETE" and re.fullmatch(r"/api/v1/products/\d+/\d+", path):

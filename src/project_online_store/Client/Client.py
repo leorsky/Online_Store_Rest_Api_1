@@ -30,7 +30,16 @@ while True:
                 f"{body}"
             )
         elif method == "PUT":
-            pass
+            body = input("Your request body: ")
+            request = (
+                f"{method} {path} HTTP/1.1\r\n"
+                f"Host: {HOST}:{PORT}\r\n"
+                "Accept: application/json\r\n"
+                "Content-Type: application/json\r\n"
+                f"Content-Length: {len(body)}\r\n"
+                "\r\n"
+                f"{body}"
+            )
         elif method == "DELETE":
             request = (
                 f"{method} {path} HTTP/1.1\r\n"
