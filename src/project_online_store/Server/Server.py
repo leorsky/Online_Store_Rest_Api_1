@@ -1,6 +1,8 @@
 import socket
 import threading
 import json
+
+from project_online_store.src.project_online_store.OOP.Categories import Categories
 from project_online_store.src.project_online_store.OOP.Products import Products
 
 HOST = 'localhost'
@@ -16,6 +18,12 @@ product_2_2 = Products(2, "LG OLED C4", 1499)
 product_3_1 = Products(1, "MacBook Air M3", 1099)
 product_3_2 = Products(2, "ASUS ROG Zephyrus G14", 1599)
 product_3_3 = Products(3, "Lenovo ThinkPad X1 Carbon", 1399)
+
+category_1 = Categories(1, [product_1_1, product_1_2, product_1_3])
+category_2 = Categories(2, [product_2_1, product_2_2])
+category_3 = Categories(3, [product_3_1, product_3_2, product_3_3])
+
+category = [category_1, category_2, category_3]
 
 products = [
     {
