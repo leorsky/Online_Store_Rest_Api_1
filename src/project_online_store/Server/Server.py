@@ -1,9 +1,21 @@
 import socket
 import threading
 import json
+from project_online_store.src.project_online_store.OOP.Products import Products
 
 HOST = 'localhost'
 PORT = 8000
+
+product_1_1 = Products(1, "iPhone 15", 999)
+product_1_2 = Products(2, "Samsung Galaxy S24", 899)
+product_1_3 = Products(3, "iPhone 11", 800)
+
+product_2_1 = Products(1, "Samsung QLED 4K TV", 1299)
+product_2_2 = Products(2, "LG OLED C4", 1499)
+
+product_3_1 = Products(1, "MacBook Air M3", 1099)
+product_3_2 = Products(2, "ASUS ROG Zephyrus G14", 1599)
+product_3_3 = Products(3, "Lenovo ThinkPad X1 Carbon", 1399)
 
 products = [
     {
