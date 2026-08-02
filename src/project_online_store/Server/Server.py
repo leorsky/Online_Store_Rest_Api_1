@@ -21,7 +21,20 @@ products = [
 ]
 
 def handle_client(client_socket, client_address):
-    pass
+    try:
+        request = client_socket.recv(4096).decode()
+
+        if request == '':
+            client_socket.close()
+
+
+    except Exception as e:
+        print(e)
+
+
+
+
+
 
 def start_server():
     server_socket = socket.socket(
