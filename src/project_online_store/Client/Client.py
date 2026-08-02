@@ -7,16 +7,41 @@ PORT = 8000
 
 while True:
     try:
-        method = input("\nYour method: ")
+        method = input("\nYour method: ").upper()
         path = input("Your path: ")
 
-        request = (
-            f"{method} {path} HTTP/1.1\r\n"
-            f"Host: {HOST}:{PORT}\r\n"
-            "Accept: application/json\r\n"
-            "Content-Type: application/json\r\n"
-            "\r\n"
-        )
+        if method == "GET":
+            request = (
+                f"{method} {path} HTTP/1.1\r\n"
+                f"Host: {HOST}:{PORT}\r\n"
+                "Accept: application/json\r\n"
+                "Content-Type: application/json\r\n"
+                "\r\n"
+            )
+        elif method == "POST":
+            body = input("Your request body: ")
+            request = (
+                f"{method} {path} HTTP/1.1\r\n"
+                f"Host: {HOST}:{PORT}\r\n"
+                "Accept: application/json\r\n"
+                "Content-Type: application/json\r\n"
+                f"Content-Length: {len(body)}\r\n"
+                "\r\n"
+                f"{body}"
+            )
+        elif method == "PUT":
+            pass
+        elif method == "DELETE":
+            request = (
+                f"{method} {path} HTTP/1.1\r\n"
+                f"Host: {HOST}:{PORT}\r\n"
+                "Accept: application/json\r\n"
+                "Content-Type: application/json\r\n"
+                "\r\n"
+            )
+        else:
+            print("Invalid method. Please use GET, POST, PUT, or DELETE.")
+            continue
 
         client_socket = socket.socket(
             socket.AF_INET,
