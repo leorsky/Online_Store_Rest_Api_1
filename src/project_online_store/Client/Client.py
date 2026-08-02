@@ -1,4 +1,5 @@
 import socket
+import json
 
 HOST = 'localhost'
 PORT = 8000
@@ -32,8 +33,26 @@ while True:
 
         response = client_socket.recv(4096)
 
+        headers, body = response.decode("utf-8").split("\r\n\r\n", 1)
+
         print("\nSERVER RESPONSE:")
-        print(response.decode("utf-8"))
+        print(headers)
+
+        print("\nBODY:")
+
+        try:
+            json_body = json.loads(body)
+
+            print(
+                json.dumps(
+                    json_body,
+                    indent=4,
+                    ensure_ascii=False
+                )
+            )
+
+        except json.JSONDecodeError:
+            print(body)
 
         client_socket.close()
 
