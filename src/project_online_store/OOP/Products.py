@@ -59,16 +59,16 @@ class Products:
     def __str__(self) -> str:
         return json.dumps(
             {
-                "id": self._idd,
-                "name": self._name,
-                "price": self._price,
+                "id": self.idd,
+                "name": self.name,
+                "price": self.price,
             }
         )
 
     def __repr__(self) -> str:
         return (
             f"Products("
-            f"idd={self._idd}, "
-            f"name='{self._name}', "
-            f"price={self._price})"
+            f"idd={self.idd}, "
+            f"name='{self.name}', "
+            f"price={self.price})"
         )
